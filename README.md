@@ -1,134 +1,134 @@
-
-
 # 🛠️ Project Toolsuite
 
 **Simple. Fast. Free.**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue?style=for-the-badge)](https://project-toolsuite.vercel.app)
-[![GitHub Stars](https://img.shields.io/github/stars/Winter262005/Project-Toolsuite?style=for-the-badge)](https://github.com/Winter262005/Project-Toolsuite/stargazers)
-[![Forks](https://img.shields.io/github/forks/Winter262005/Project-Toolsuite?style=for-the-badge)](https://github.com/Winter262005/Project-Toolsuite/network/members)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-green?style=for-the-badge)](LICENSE)
-[![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-orange?style=for-the-badge)](CONTRIBUTING.md)
-
-> A privacy-first collection of browser-based utilities — open your browser, complete your task, download the result. No friction. No distractions.
+> A privacy-first collection of browser-based utilities — open your browser, complete your task, and download the result. No friction. No distractions.
 
 ---
 
-## 📖 What is Project Toolsuite?
+# 📖 Project Overview
 
 Project Toolsuite is an open-source platform that provides a collection of browser-based utility tools for developers, students, designers, and everyday users.
 
-All tools are designed with a privacy-first approach, ensuring that most processing happens directly in the browser without sending user data to external servers.
+The platform is designed with a privacy-first approach, ensuring that users can perform tasks directly in their browser without unnecessary data collection or account creation.
 
 ### 🎯 Mission
 
-To provide fast, free, and privacy-respecting tools that help users complete tasks efficiently without unnecessary complexity.
+To provide fast, free, and privacy-respecting tools that help users complete everyday tasks efficiently.
 
 ---
 
-## ✨ Features
+# ✨ Features
 
-### 📁 File Utilities
+## 📁 File Utilities
 
 * File conversion
-* Compression tools
 * File management helpers
+* Compression tools
 
-### 💻 Developer Tools
+## 💻 Developer Tools
 
 * Code formatters
-* Text utilities
 * Encoders and decoders
-* Developer productivity helpers
+* Text utilities
+* Developer productivity tools
 
-### 🎨 Graphics & Design
+## 🎨 Graphics & Design
 
-* Image processing
-* Visual utilities
+* Image processing utilities
+* Visual editing tools
 * Design support tools
 
-### 🔒 Security Tools
+## 🔒 Security Tools
 
 * Password generators
 * Encryption helpers
 * Privacy-focused utilities
 
-### ⚡ Productivity Tools
+## ⚡ Productivity Tools
 
-* Everyday utility tools
-* Quick task automation
-* Time-saving features
-
----
-
-## 🌟 Why Choose Toolsuite?
-
-* No registration required
-* Completely browser-based
-* Fast and lightweight
-* Open-source and transparent
-* Privacy-focused
-* Free forever
+* Quick utility tools
+* Everyday workflow helpers
+* Time-saving solutions
 
 ---
 
-## 🏗️ Architecture
+# 🏗️ Architecture
 
-Project Toolsuite follows a client-side architecture:
+Project Toolsuite follows a browser-first architecture.
 
+```text
 User Browser
-↓
+      ↓
 HTML + CSS + JavaScript
-↓
+      ↓
 Local Processing
-↓
-Result Generation
-↓
-Download/Output
+      ↓
+Result Output
+```
 
-No complex backend is required for most tools, ensuring better privacy and faster performance.
+Benefits:
 
----
-
-## 🚀 Getting Started
-
-### Option 1: Use the Live Website
-
-Visit:
-
-https://project-toolsuite.vercel.app
-
-No installation required.
+* Faster performance
+* Better privacy
+* No mandatory sign-up
+* Lightweight architecture
 
 ---
 
-### Option 2: Run Locally
+# 🚀 Getting Started
 
-#### Clone the Repository
+## Option 1: Use Online
+
+Simply visit the live website and start using the tools.
+
+---
+
+## Option 2: Run Locally
+
+### Clone the Repository
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/Project-Toolsuite.git
 ```
 
-#### Navigate to the Project Directory
+### Navigate to Project Folder
 
 ```bash
 cd Project-Toolsuite
 ```
 
-#### Run Using a Local Server
+### Run Using Live Server
+
+Open the project in VS Code and start Live Server.
+
+OR
 
 ```bash
 npx serve .
 ```
 
-Then open:
+Then visit:
 
+```text
 http://localhost:3000
+```
 
 ---
 
-## 📂 Project Structure
+# 🧰 Tech Stack
+
+| Technology     | Purpose         |
+| -------------- | --------------- |
+| HTML5          | Structure       |
+| CSS3           | Styling         |
+| JavaScript     | Functionality   |
+| Service Worker | Offline Support |
+| Vercel         | Deployment      |
+
+---
+
+# 📂 Project Structure
 
 ```text
 Project-Toolsuite/
@@ -136,133 +136,140 @@ Project-Toolsuite/
 ├── assets/
 ├── css/
 ├── js/
-├── tools/
 ├── images/
 ├── sw.js
 ├── index.html
+├── README.md
 ├── CONTRIBUTING.md
 ├── LICENSE
-└── README.md
+└── SECURITY.md
 ```
 
 ---
 
-## 🧰 Tech Stack
+# 🚧 Roadmap
 
-| Technology     | Purpose         |
-| -------------- | --------------- |
-| HTML5          | Structure       |
-| CSS3           | Styling         |
-| JavaScript     | Interactivity   |
-| Service Worker | Offline Support |
-| Vercel         | Hosting         |
+## Current Features
 
----
-
-## 🚧 Roadmap
-
-### Current Features
-
-* [x] Responsive UI
 * [x] Browser-based tools
-* [x] Offline support
+* [x] Responsive design
 * [x] Privacy-first approach
+* [x] Open-source collaboration
 
-### Planned Features
+## Planned Improvements
 
-* [ ] Additional file converters
-* [ ] Advanced developer utilities
-* [ ] AI-powered productivity tools
-* [ ] More security utilities
+* [ ] Additional utility tools
+* [ ] Better mobile experience
+* [ ] Improved accessibility
 * [ ] Enhanced UI/UX
+* [ ] Advanced productivity features
 
 ---
 
-## 🤝 Contributing
+# 📸 Screenshots
 
-We welcome contributors of all skill levels.
+### Homepage
 
-### Contribution Workflow
+*Add homepage screenshot here.*
+
+```md
+![Homepage](assets/homepage.png)
+```
+
+### Tools Dashboard
+
+*Add dashboard screenshot here.*
+
+```md
+![Dashboard](assets/dashboard.png)
+```
+
+---
+
+# 🤝 Contributing
+
+We welcome contributors of all experience levels.
+
+### Steps to Contribute
 
 1. Fork the repository
 2. Clone your fork
-3. Create a branch
-4. Make changes
-5. Commit changes
-6. Push changes
-7. Open a Pull Request
-
-### Example
+3. Create a new branch
 
 ```bash
-git checkout -b feature/improve-readme
-git add .
-git commit -m "docs: improve README"
-git push origin feature/improve-readme
+git checkout -b feature-name
 ```
 
-For detailed guidelines, see CONTRIBUTING.md.
+4. Make your changes
+
+5. Commit your work
+
+```bash
+git commit -m "Add: feature description"
+```
+
+6. Push changes
+
+```bash
+git push origin feature-name
+```
+
+7. Open a Pull Request
 
 ---
 
-## 📜 Code of Conduct
-
-Please read CODE_OF_CONDUCT.md before participating in the community.
-
----
-
-## 🔒 Security
-
-If you discover a security vulnerability, please follow SECURITY.md and report it responsibly.
-
----
-
-## ❓ FAQ
+# ❓ FAQ
 
 ### Is Project Toolsuite free?
 
-Yes. All tools are completely free to use.
+Yes, all tools are free to use.
 
 ### Do I need to create an account?
 
-No. Most tools can be used instantly without registration.
+No. Most tools can be used instantly.
 
 ### Is my data uploaded?
 
-The project aims to process data locally in your browser whenever possible.
+The project aims to process data locally in the browser whenever possible.
 
 ### Can beginners contribute?
 
-Absolutely. Beginner-friendly issues are regularly available.
+Absolutely! Beginner contributions are welcome.
 
 ---
 
-## 📄 License
+# 📜 License
 
 This project is licensed under the GNU General Public License v3.0.
 
-See LICENSE for details.
+See the LICENSE file for complete details.
 
 ---
 
-## 🌐 Useful Links
+# 🏆 Contributors Leaderboard
 
-* Live Website: https://project-toolsuite.vercel.app
-* Contributors Page: https://project-toolsuite.vercel.app/contributers.html
-* Privacy Policy: https://project-toolsuite.vercel.app/privacy.html
-* GitHub Issues: https://github.com/Winter262005/Project-Toolsuite/issues
+<!-- LEADERBOARD_START -->
 
----
+| Rank | Contributor         | Points | Commits |
+| ---: | ------------------- | -----: | ------: |
+|    1 | @Winter262005       |    210 |     210 |
+|    2 | @VITianYash42       |     20 |      20 |
+|    3 | @AdityaMittal08     |      9 |       9 |
+|    4 | @SamXop123          |      4 |       4 |
+|    5 | @Pranavkale11       |      3 |       3 |
+|    6 | @ShaikhWarsi        |      3 |       3 |
+|    7 | @SuyashSoni10       |      3 |       3 |
+|    8 | @nikhil1205-ai      |      2 |       2 |
+|    9 | @VedanshN           |      2 |       2 |
+|   10 | @androidvitb        |      1 |       1 |
+|   11 | @anshul-lh44        |      1 |       1 |
+|   12 | @Shlok-Dwivedi      |      1 |       1 |
+|   13 | @Vanshikaram        |      1 |       1 |
+|   14 | @vishakhaojha57     |      1 |       1 |
+|   15 | @Shweta-Bairagi0312 |      1 |       1 |
+|   16 | @yhcb21             |      1 |       1 |
 
-## ❤️ Support
-
-If you find this project useful:
-
-⭐ Star the repository
-
-🍴 Fork the repository
-
-🤝 Contribute to the project
+<!-- LEADERBOARD_END -->
 
 ---
 

@@ -27,15 +27,6 @@ class VectorEngine {
         this.setupEvents();
         this.loop();
 
-        // Add beforeunload warning for unsaved changes
-        window.addEventListener('beforeunload', (e) => {
-            if (this.hasUnsavedChanges()) {
-                e.preventDefault();
-                e.returnValue = 'You have unsaved drawings. Are you sure you want to leave?';
-                return e.returnValue;
-            }
-        });
-
         // Try to restore previously saved shapes
         this.loadFromLocalStorage();
 
@@ -124,12 +115,19 @@ class VectorEngine {
 
     setupEvents() {
         window.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && !e.shiftKey && e.key.toLowerCase() === 'z') {
+            const target = e.target;
+            const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+            if (isInput) return;
+
+            if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z') {
                 e.preventDefault();
                 this.undo();
-            } else if ((e.ctrlKey && e.key.toLowerCase() === 'y') || (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'z')) {
+            } else if (((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') || ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'z')) {
                 e.preventDefault();
                 this.redo();
+            } else if (e.key === 'Delete' || e.key === 'Backspace') {
+                if (this.selection) e.preventDefault();
+                this.deleteSelected();
             }
         });
 
@@ -247,8 +245,7 @@ class VectorEngine {
                 this.currentShape = null;
             } else if (this.tool === 'select' && this.isDragging && this.selection) {
                 if (this.dragStartState && JSON.stringify(this.shapes) !== JSON.stringify(this.dragStartState)) {
-                    this.undoStack.push(this.dragStartState);
-                    this.redoStack = [];
+                    this.saveState(this.dragStartState);
                     this.saveToLocalStorage(); // Auto-save after dragging
                 }
             }
@@ -428,8 +425,12 @@ class VectorEngine {
         document.getElementById('strokeWidth').value = this.selection.width;
     }
 
-    saveState() {
-        this.undoStack.push(JSON.parse(JSON.stringify(this.shapes)));
+    saveState(state = null) {
+        const stateToSave = state || JSON.parse(JSON.stringify(this.shapes));
+        this.undoStack.push(stateToSave);
+        if (this.undoStack.length > 50) {
+            this.undoStack.shift();
+        }
         this.redoStack = [];
     }
 
@@ -449,11 +450,6 @@ class VectorEngine {
             this.selection = null;
             this.saveToLocalStorage(); // Auto-save after redo
         }
-    }
-
-    // Check if there are unsaved shapes
-    hasUnsavedChanges() {
-        return this.shapes && this.shapes.length > 0;
     }
 
     // Save shapes to localStorage

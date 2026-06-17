@@ -34,12 +34,12 @@ async function handleFileUpload(event) {
     document.getElementById('slider-ui').style.display = 'block';
     document.getElementById('controls-ui').style.display = 'flex';
     previewBtn.innerText = "▶ Preview Trim";
-    
+
     // Initialize Audio Context
     if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
     const arrayBuffer = await file.arrayBuffer();
-    
+
     try {
         audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
         drawWaveform();
@@ -54,9 +54,9 @@ async function handleFileUpload(event) {
 function drawWaveform() {
     const width = canvas.width = canvas.offsetWidth;
     const height = canvas.height = canvas.offsetHeight;
-    
+
     // Get raw data from left channel (usually enough for visualization)
-    const rawData = audioBuffer.getChannelData(0); 
+    const rawData = audioBuffer.getChannelData(0);
     const step = Math.ceil(rawData.length / width);
     const amp = height / 2;
 
@@ -67,14 +67,14 @@ function drawWaveform() {
     for (let i = 0; i < width; i++) {
         let min = 1.0;
         let max = -1.0;
-        
+
         // Downsample for canvas width
         for (let j = 0; j < step; j++) {
             const datum = rawData[(i * step) + j];
             if (datum < min) min = datum;
             if (datum > max) max = datum;
         }
-        
+
         // Draw vertical bar for this pixel column
         ctx.fillRect(i, (1 + min) * amp, 1, Math.max(1, (max - min) * amp));
     }
@@ -124,7 +124,7 @@ function togglePreview() {
     const duration = audioBuffer.duration;
     const startVal = parseFloat(startSlider.value);
     const endVal = parseFloat(endSlider.value);
-    
+
     const startTime = (duration * startVal) / 100;
     const endTime = (duration * endVal) / 100;
     const playDuration = endTime - startTime;
@@ -132,7 +132,7 @@ function togglePreview() {
     sourceNode = audioContext.createBufferSource();
     sourceNode.buffer = audioBuffer;
     sourceNode.connect(audioContext.destination);
-    
+
     sourceNode.start(0, startTime, playDuration);
     isPlaying = true;
     previewBtn.innerText = "⏹ Stop Preview";
@@ -172,7 +172,7 @@ function downloadTrimmedAudio() {
 
     // 3. Encode to WAV (Native JS)
     const wavBlob = bufferToWave(trimmedBuffer, frameCount);
-    
+
     // 4. Trigger Download
     const url = URL.createObjectURL(wavBlob);
     const anchor = document.createElement('a');
@@ -184,58 +184,167 @@ function downloadTrimmedAudio() {
 
 // Helper: Convert AudioBuffer to WAV Blob
 function bufferToWave(abuffer, len) {
+
     const numOfChan = abuffer.numberOfChannels;
+
     const length = len * numOfChan * 2 + 44;
+
     const buffer = new ArrayBuffer(length);
+
     const view = new DataView(buffer);
+
     const channels = [];
-    let i;
+
     let sample;
+
     let offset = 0;
+
+
+    // ONLY HEADER POSITION
     let pos = 0;
 
-    // Write WAV Header
-    setUint32(0x46464952);                         // "RIFF"
-    setUint32(length - 8);                         // file length - 8
-    setUint32(0x45564157);                         // "WAVE"
 
-    setUint32(0x20746d66);                         // "fmt " chunk
-    setUint32(16);                                 // length = 16
-    setUint16(1);                                  // PCM (uncompressed)
+
+    // =========================
+    // WAV HEADER
+    // =========================
+
+    setUint32(0x46464952); // RIFF
+
+    setUint32(length - 8);
+
+    setUint32(0x45564157); // WAVE
+
+
+
+    setUint32(0x20746d66); // fmt
+
+    setUint32(16);
+
+    setUint16(1);
+
     setUint16(numOfChan);
+
     setUint32(abuffer.sampleRate);
-    setUint32(abuffer.sampleRate * 2 * numOfChan); // avg. bytes/sec
-    setUint16(numOfChan * 2);                      // block-align
-    setUint16(16);                                 // 16-bit (hardcoded in this encoder)
 
-    setUint32(0x61746164);                         // "data" - chunk
-    setUint32(length - pos - 4);                   // chunk length
+    setUint32(
+        abuffer.sampleRate * 2 * numOfChan
+    );
 
-    // Interleave channels (LRLRLR...)
-    for(i = 0; i < abuffer.numberOfChannels; i++)
-        channels.push(abuffer.getChannelData(i));
+    setUint16(numOfChan * 2);
 
-    while(pos < len) {
-        for(i = 0; i < numOfChan; i++) {
-            // Clamp value between -1 and 1
-            sample = Math.max(-1, Math.min(1, channels[i][pos]));
-            // Convert to 16-bit PCM
-            sample = (0.5 + sample < 0 ? sample * 32768 : sample * 32767)|0;
-            view.setInt16(44 + offset, sample, true); 
-            offset += 2;
-        }
-        pos++;
+    setUint16(16);
+
+
+
+    setUint32(0x61746164); // data
+
+    setUint32(
+        len * numOfChan * 2
+    );
+
+
+
+
+    // =========================
+    // AUDIO DATA
+    // =========================
+
+
+    for (let i = 0; i < numOfChan; i++) {
+
+        channels.push(
+            abuffer.getChannelData(i)
+        );
+
     }
 
-    return new Blob([buffer], {type: "audio/wav"});
+
+
+    // IMPORTANT FIX
+    // Separate frame counter
+    let frameIdx = 0;
+
+
+
+    while (frameIdx < len) {
+
+        for (let i = 0; i < numOfChan; i++) {
+
+
+            sample = Math.max(
+                -1,
+                Math.min(
+                    1,
+                    channels[i][frameIdx]
+                )
+            );
+
+
+
+            sample =
+                sample < 0
+                    ?
+                    sample * 0x8000
+                    :
+                    sample * 0x7FFF;
+
+
+
+            view.setInt16(
+                44 + offset,
+                sample,
+                true
+            );
+
+
+            offset += 2;
+
+        }
+
+
+        frameIdx++;
+
+    }
+
+
+
+    return new Blob(
+        [buffer],
+        {
+            type: "audio/wav"
+        }
+    );
+
+
+
 
     function setUint16(data) {
-        view.setUint16(pos, data, true);
+
+        view.setUint16(
+            pos,
+            data,
+            true
+        );
+
+
         pos += 2;
+
     }
 
+
+
     function setUint32(data) {
-        view.setUint32(pos, data, true);
+
+        view.setUint32(
+            pos,
+            data,
+            true
+        );
+
+
         pos += 4;
+
     }
+
 }
